@@ -16,16 +16,20 @@ function ImageInput({imageUri, onChangeImage}) {
       }
 
     const handlePress =()=>{
-        if(!imageUri) selectImage();
-        else Alert.alert('Delete', 'Are you sure you want to delete this image',[
-            {
-                text:'Yes',
-                onPress:()=>onChangeImage(null)
-            },
-            {
-                text:'No'
-            }
-        ])
+        if(!imageUri){
+            selectImage();
+        } 
+        else {
+            Alert.alert('Delete', 'Are you sure you want to delete this image',[
+                {
+                    text:'Yes',
+                    onPress:()=>onChangeImage(null)
+                },
+                {
+                    text:'No'
+                }
+            ])
+        }
     }
 
     const selectImage=async()=>{
@@ -44,13 +48,17 @@ function ImageInput({imageUri, onChangeImage}) {
 
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+    onPress={handlePress}
+    >
         <View style={styles.container}>
         {!imageUri && (<MaterialCommunityIcons
         color='gray'
+        name='camera'
+        size={50}
         />)}
         {imageUri && <Image
-        source={{uri: imageUri}}
+        source={{uri: imageUri}} 
         style={styles.image}
         />}
     </View>
@@ -63,14 +71,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor:color.faded,
     borderRadius: 15,
-    justifyContnet:'center',
+    justifyContent:'center',
     alignItems:'center',
     height:100,
-    width:100
+    width:100,
+    overflow:'hidden'
   }, 
   image:{
     height:'100%',
-    width:'100%'
+    width:'100%',
   }
 });
 
