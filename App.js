@@ -23,6 +23,7 @@ import AccountScreen from './app/screens/AccountScreen';
 import ListingsScreen from './app/screens/ListingsScreen';
 import AppTextInput from './app/components/AppTextInput';
 import AppPicker from './app/components/AppPicker';
+import LoginScreen from './app/screens/LoginScreen';
 
 
 
@@ -53,17 +54,7 @@ export default function App() {
     <GestureHandlerRootView
     style={{flex: 1}}
     >
-      <Screen>
-      <AppPicker
-      selectedItem={category}
-      onSelectItem={item=>setCategory(item)}
-      icon='apps'
-      placeholder='TEXT'
-      items={categories}
-      />
-      <AppTextInput/>
-      </Screen>
-    
+      <LoginScreen></LoginScreen>
     </GestureHandlerRootView>
   );
 }

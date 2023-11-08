@@ -18,10 +18,12 @@
     "expo-permissions": "~14.2.1",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.2.1",
+    "formik": "^2.1.4",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-gesture-handler": "~2.12.0",
-    "react-native-web": "^0.11.7"
+    "react-native-web": "^0.11.7",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
