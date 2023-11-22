@@ -4,48 +4,41 @@ import ImageInput from './ImageInput';
 
 function ImageInputList({imageUris = [], onRemoveImage, onAddImage}) {
     const scrollView = useRef()
-   
-
+    
+    
   return (
-    <View>
-        <ScrollView 
-    horizontal ref={scrollView}
-    onContentSizeChange={()=> scrollView.current.scrollToEnd()}
+    <ScrollView
+    ref={scrollView}
+    horizontal
+    onContentSizeChange={()=>scrollView.current.scrollToEnd()}
     >
         <View style={styles.container}>
-        {imageUris?.map(uri => (
-            <View
-            style={styles.image}
-            >
-            <ImageInput
-            imageUri={uri}
-            key={uri}
-            onChangeImage={()=>onRemoveImage(uri)
-            }
-            />
-            </View>
+        {imageUris.map(uri => (
+        <View
+        style={styles.image}
+        key={uri}
+        >
+        <ImageInput
+        imageUri={uri}
+        onChangeImage={()=>onRemoveImage(uri)}
+        />
+        </View>
         ))}
         <ImageInput
-        onChangeImage={uri => onAddImage(uri)
-        }
+        onChangeImage={uri =>onAddImage(uri)}
         />
     </View>
-
     </ScrollView>
-    </View>
-    
-      );
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  image:{
-    margin:10,
-  }
+    flexDirection:'row'
+},
+image:{
+    marginRight:10
+}
 });
 
 export default ImageInputList;
