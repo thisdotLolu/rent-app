@@ -1,36 +1,58 @@
-import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 
 import Card from "../components/Card";
 import colors from "../config/colors";
 import Screen from "../components/Screen";
+import listingsApi from "../api/listings";
+import AppText from "../components/Text";
+import AppButton from "../components/Button";
+import useApi from "../hooks/useApi";
 
-const listings = [
-  {
-    id: 1,
-    title: "Red jacket for sale",
-    price: 100,
-    image: require("../assets/jacket.jpg"),
-  },
-  {
-    id: 2,
-    title: "Couch in great condition",
-    price: 1000,
-    image: require("../assets/couch.jpg"),
-  },
-];
 
 function ListingsScreen({navigation}) {
+  const getListingsApi = useApi(listingsApi.getListings)
+
+  useEffect(()=>{
+    getListingsApi.request()
+  },[])
+
+  // const loadListings = async()=>{
+  //   setLoading(true)
+  //   const response = await listingsApi.getListings();
+  //   setLoading(false)
+
+  //   if(!response.ok){
+  //     setError(true)
+  //     return
+  //   }
+  //   setError(false)
+  //   console.log('response:',response)
+  //   setListings(response.data)
+  // }
+
+  console.log(getListingsApi?.data)
+
   return (
     <Screen style={styles.screen}>
+      {getListingsApi?.error && <>
+      <AppText>Couldnt retrieve the listings</AppText>
+      <AppButton title='Retry'
+      onPress={loadListings}
+      />
+      </>}
+      <ActivityIndicator
+      animating={true}
+      size={"large"}
+      />
       <FlatList
-        data={listings}
+        data={getListingsApi?.data}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
             title={item.title}
             subTitle={"$" + item.price}
-            image={item.image}
+            imageUrl={item.images[0].url}
             onPress={()=>navigation.navigate('ListingDetails', item)}
           />
         )}
