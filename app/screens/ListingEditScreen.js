@@ -92,7 +92,7 @@ function ListingEditScreen() {
     setLocation({latitude,longitude})
   }
 
-const handleSubmit = async(listing)=>{
+const handleSubmit = async(listing, {resetForm})=>{
     setProgress(0)
     setUploadVisible(true)
     const result = await listingsApi.addListing({...listing, location},
@@ -103,6 +103,7 @@ const handleSubmit = async(listing)=>{
     }
     alert ('success')
     setUploadVisible(false)
+    resetForm()
 }
 
   useEffect(()=>{
