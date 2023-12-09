@@ -7,6 +7,7 @@ import { ErrorMessage,Form, FormField, SubmitButton } from "../components/forms"
 import authApi from "../api/auth";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
+import useAuth from "../auth/useAuth";
 
 
 const validationSchema = Yup.object().shape({
@@ -15,7 +16,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
-  const authContext = useContext(AuthContext)
+  // const authContext = useContext(AuthContext)
+  const {logIn} = useAuth()
 
   const [loginFailed,setLoginFailed] = useState(false)
 
@@ -23,9 +25,7 @@ function LoginScreen(props) {
     const result = await authApi.login(email,password)
     if(!result.ok) 
     setLoginFailed(false)
-  const user = jwtDecode(result.data)
-  authContext.setUser(user)
-  authStorage.storeToken(result.data)
+    logIn(result.data )
   }
 
   const restoreToken = async () =>{
@@ -72,7 +72,8 @@ function LoginScreen(props) {
           secureTextEntry
           textContentType="password"
         />
-        <SubmitButton title="Login" />
+        <SubmitButton 
+        title="Login" />
       </Form>
     </Screen>
   );
